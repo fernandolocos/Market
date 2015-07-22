@@ -1,2 +1,2 @@
-# MercadoZe
+# MercadinhoZe
 Simple system for supermarkets transaction
