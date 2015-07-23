@@ -55,13 +55,14 @@ public class PedidoMain {
 		
 		String bip = null;
 		StringBuffer menu = null;
+		double totalGeral = 0;
 		
 		do {
 			
 			bip = Dialogo.pegaValor((menu != null ? menu.toString() : "") + 
 					"Digite o código do produto:\n "
 					+ "[qtde][x][desconto][x]codigo\n"
-					+ "Para sair aperte Esc/Cancelar\n");
+					+ "Para sair aperte <Esc> ou Cancelar para sair\n");
 			
 			int qtdeBip = 1;
 			double descBip = 0;
@@ -111,6 +112,24 @@ public class PedidoMain {
 			}
 
 		} while (bip != null);
+		
+		double desconto = 0;
+		try {
+			desconto = Dialogo.pegaValorDouble("DESCONTO TOTAL DE VENDA");
+		} catch (NullPointerException e) {
+
+		}
+
+		totalGeral -= desconto;
+
+		p.setValor(totalGeral);
+	
+		control.finalizaPedido();
+		
+		String fimPedido = "PEDIDO Nº : " + p.getId() + " - FINALIZADO\n";
+		
+		Dialogo.exibeMensagem(fimPedido + "\n" + menu.toString()
+				+ "\nDESCONTO : " + desconto + "\nVALOR TOTAL: " + totalGeral);
 			
 	}
 

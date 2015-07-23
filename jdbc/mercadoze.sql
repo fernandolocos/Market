@@ -103,11 +103,13 @@ CONSTRAINT fk_pedido_func FOREIGN KEY(funcionario_id) REFERENCES pessoa(id)
 CREATE TABLE saida(
 id bigint NOT NULL,
 pedido_id bigint NOT NULL,
+produto_id bigint NOT NULL,
 quantidade int NOT NULL,
 valor numeric(8,2) NOT NULL,
 desconto numeric(8,2),
 CONSTRAINT pk_saida_id PRIMARY KEY(id),
-CONSTRAINT fk_saida_pedido FOREIGN KEY(pedido_id) REFERENCES pedido(id)
+CONSTRAINT fk_saida_pedido FOREIGN KEY(pedido_id) REFERENCES pedido(id),
+CONSTRAINT fk_saida_prod FOREIGN KEY(produto_id) REFERENCES produto(id)
 );
 
 CREATE SEQUENCE seq_categoria;

@@ -70,5 +70,11 @@ public class ControlePedido {
 		}
 	}
 	
+	public void finalizaPedido() {
+
+		dao.persistePedido(this.pedido);
+		dao.finalizar();
+		
+	}
 	
 }
