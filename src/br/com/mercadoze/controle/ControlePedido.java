@@ -10,14 +10,15 @@ import br.com.mercadoze.exception.EstoqueInsuficienteException;
 import br.com.mercadoze.exception.ProdutoNotFoundException;
 
 public class ControlePedido {
-	
+
 	private Pedido pedido;
 	private PedidoDAO dao;
-	
-	public ControlePedido(){
+
+	public ControlePedido() {
 		this.pedido = new Pedido();
 	}
-	public ControlePedido(Pedido pedido){
+
+	public ControlePedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 
@@ -28,7 +29,7 @@ public class ControlePedido {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	
+
 	/**
 	 * 
 	 * @param quantidade
@@ -37,25 +38,28 @@ public class ControlePedido {
 	 * @throws ProdutoNotFoundException
 	 * @throws EstoqueInsuficienteException
 	 */
-	public void processaSaida(int quantidade, double desconto, long codigoProduto) 
-			throws ProdutoNotFoundException, EstoqueInsuficienteException {
-		
+	public void processaSaida(int quantidade, double desconto,
+			long codigoProduto) throws ProdutoNotFoundException,
+			EstoqueInsuficienteException {
+
 		usaDAO(); // recupera a conexão já aberta
-		
+
 		Produto p = dao.buscaProduto(codigoProduto);
-		if(p != null){
-			if(p.getEstoque() >= quantidade){
+		if (p != null) {
+			if (p.getEstoque() >= quantidade) {
 				Saida saida = new Saida();
 				saida.setQtde(quantidade);
 				saida.setDesconto(desconto);
 				saida.setProduto(p);
 				saida.setValor(p.getValor());
-				
-				if(pedido.getSaida() == null){
+
+				if (pedido.getSaida() == null) {
 					pedido.setSaida(new ArrayList<Saida>());
 				}
-				pedido.getSaida().add(saida); // referência cruzada - Pedido tem list saída
-											  // e Saida tem atributo pedido para facilitar busca
+				pedido.getSaida().add(saida); // referência cruzada - Pedido tem
+												// list saída
+												// e Saida tem atributo pedido
+												// para facilitar busca
 			} else {
 				throw new EstoqueInsuficienteException(p);
 			}
@@ -63,18 +67,18 @@ public class ControlePedido {
 			throw new ProdutoNotFoundException(codigoProduto);
 		}
 	}
-	
-	private void usaDAO(){
-		if(this.dao == null){
+
+	private void usaDAO() {
+		if (this.dao == null) {
 			this.dao = new PedidoDAO();
 		}
 	}
-	
+
 	public void finalizaPedido() {
 
 		dao.persistePedido(this.pedido);
 		dao.finalizar();
-		
+
 	}
-	
+
 }

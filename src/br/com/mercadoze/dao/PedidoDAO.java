@@ -11,34 +11,35 @@ import br.com.mercadoze.entidade.Unidade;
 import br.com.mercadoze.entidade.Pedido;
 import br.com.mercadoze.entidade.Saida;
 
-public class PedidoDAO extends ConexaoBanco{
-	
-	private Connection conexao; // vai segurar a conexão até a finalização do pedido
-	
-	public PedidoDAO(){
+public class PedidoDAO extends ConexaoBanco {
+
+	private Connection conexao; // vai segurar a conexão até a finalização do
+								// pedido
+
+	public PedidoDAO() {
 		conexao = conectar();
 	}
-	
-	public Produto buscaProduto(long codProduto){
-		
+
+	public Produto buscaProduto(long codProduto) {
+
 		String sql = "select * form produto where id = ?";
-		
+
 		try {
 			PreparedStatement ps = conexao.prepareStatement(sql);
 			ps.setLong(1, codProduto);
-			
+
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				Produto p = new Produto();
 				p.setId(codProduto);
 				p.setDescricao(rs.getString("descricao"));
 				p.setEstoque(rs.getLong("estoque"));
 				p.setValor(rs.getDouble("valor"));
-				
+
 				Unidade un = new Unidade();
 				un.setSigla(rs.getString("sigla"));
 				p.setUnidade(un);
-				
+
 				rs.close();
 				ps.close();
 				return p;
@@ -46,15 +47,14 @@ public class PedidoDAO extends ConexaoBanco{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return null;
 	}
-	
-	public void finalizar(){
+
+	public void finalizar() {
 		desconectar(conexao);
 	}
-	
+
 	public void persistePedido(Pedido pedido) {
 
 		try {
@@ -89,11 +89,12 @@ public class PedidoDAO extends ConexaoBanco{
 			String sqlInSaida = "insert into saida (id,produto_id,pedido_id,quantidade,valor,desconto) values (nextval('seq_saida'),?,?,?,?,?)";
 
 			PreparedStatement psSaida = conexao.prepareStatement(sqlInSaida);
-			
+
 			String sqlAtualizaEstoque = "update produto set estoque = estoque - ? where id = ?";
 
-			PreparedStatement psEstoque = conexao.prepareStatement(sqlAtualizaEstoque);
-			
+			PreparedStatement psEstoque = conexao
+					.prepareStatement(sqlAtualizaEstoque);
+
 			for (Saida item : pedido.getSaida()) {
 				psSaida.setLong(1, item.getProduto().getId());
 				psSaida.setLong(2, pedido.getId());
@@ -102,10 +103,10 @@ public class PedidoDAO extends ConexaoBanco{
 				psSaida.setDouble(5, item.getDesconto());
 
 				psSaida.execute();
-			
+
 				psEstoque.setLong(1, item.getQtde());
 				psEstoque.setLong(2, item.getProduto().getId());
-				
+
 				psEstoque.execute();
 
 			}
@@ -122,10 +123,9 @@ public class PedidoDAO extends ConexaoBanco{
 
 				e1.printStackTrace();
 			}
-			
+
 			e.printStackTrace();
 		}
-	
 
 	}
 }

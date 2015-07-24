@@ -7,16 +7,16 @@ public class ErroCadastroException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String objeto;
-	
-	public ErroCadastroException(){
+
+	public ErroCadastroException() {
 		super();
 	}
-	
-	public ErroCadastroException(String mensagem){
+
+	public ErroCadastroException(String mensagem) {
 		super(mensagem);
 	}
-	
-	public ErroCadastroException(String mensagem, String objeto){
+
+	public ErroCadastroException(String mensagem, String objeto) {
 		super(mensagem);
 		this.objeto = objeto;
 	}

@@ -8,15 +8,15 @@ import br.com.mercadoze.exception.ErroCadastroException;
 
 public class ControleProduto {
 
-	public void incluir(Produto produto) throws ErroCadastroException{
+	public void incluir(Produto produto) throws ErroCadastroException {
 		(new ProdutoDAO()).incluir(produto);
 	}
-	
-	public List buscar(Produto produto){
+
+	public List buscar(Produto produto) {
 		return (new ProdutoDAO()).buscar(produto);
 	}
 
-	public void excluir(Produto produto) throws ErroCadastroException{
+	public void excluir(Produto produto) throws ErroCadastroException {
 		(new ProdutoDAO()).excluir(produto);
 	}
 }

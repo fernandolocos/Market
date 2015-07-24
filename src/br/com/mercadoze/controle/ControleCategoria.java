@@ -6,12 +6,12 @@ import br.com.mercadoze.entidade.Categoria;
 import br.com.mercadoze.dao.CategoriaDAO;
 
 public class ControleCategoria {
-	
-	public void incluir(Categoria cat){
+
+	public void incluir(Categoria cat) {
 		(new CategoriaDAO()).incluir(cat);
 	}
-	
-	public List buscar(Categoria cat){
+
+	public List buscar(Categoria cat) {
 		return (new CategoriaDAO()).buscar(cat);
 	}
 

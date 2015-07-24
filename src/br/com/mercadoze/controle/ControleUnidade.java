@@ -7,7 +7,7 @@ import br.com.mercadoze.entidade.Unidade;
 import br.com.mercadoze.exception.ErroCadastroException;
 
 public class ControleUnidade {
-	public void incluir(Unidade unidade) throws ErroCadastroException{
+	public void incluir(Unidade unidade) throws ErroCadastroException {
 		(new UnidadeDAO()).incluir(unidade);
 	}
 
