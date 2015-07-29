@@ -40,13 +40,13 @@ public class Dialogo {
 		return null;
 	}
 
-	public static Double pegaValorDouble(String texto) {
+	public static Integer pegaValorInt(String texto) {
 
 		for (int i = 0; i < TENTATIVAS; i++) {
 			String v = pegaValor(texto);
 
 			try {
-				Double l = Double.parseDouble(v);
+				Integer l = Integer.parseInt(v);
 				return l;
 			} catch (Exception e) {
 				// nada faz
@@ -57,13 +57,13 @@ public class Dialogo {
 		return null;
 	}
 
-	public static Integer pegaValorInt(String texto) {
+	public static Double pegaValorDouble(String texto) {
 
 		for (int i = 0; i < TENTATIVAS; i++) {
 			String v = pegaValor(texto);
 
 			try {
-				Integer l = Integer.parseInt(v);
+				Double l = Double.parseDouble(v);
 				return l;
 			} catch (Exception e) {
 				// nada faz
